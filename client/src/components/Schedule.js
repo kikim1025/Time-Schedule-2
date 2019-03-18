@@ -21,7 +21,7 @@ class ConnectSchedule extends React.Component {
                     :   <div id='schedule'>
                             {
                                 WEEK_DAYS.map((d, i) => (
-                                    <ScheduleColumn d={d} i={i} />
+                                    <ScheduleColumn d={d} i={i} key={d}/>
                                 ))
                             }
                         </div>

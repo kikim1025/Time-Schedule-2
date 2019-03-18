@@ -30,7 +30,6 @@ function checkReqForm(req){
     };
 };
 
-
 module.exports = function(app) {
     // Sends appointment data to client
     app.get('/api/appointments', function(req, res) {

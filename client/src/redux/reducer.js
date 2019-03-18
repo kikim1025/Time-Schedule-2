@@ -1,4 +1,4 @@
-import { GET_DATA, FAIL_DUP } from './actions';
+import { GET_DATA, FAIL } from './actions';
 
 const initState = {};
 
@@ -9,10 +9,9 @@ function reducer(state = initState, action) {
                 appointments: action.payload,
                 note: ''
             });
-        case FAIL_DUP:
+        case FAIL:
             return Object.assign({}, state, { 
-                appointments: action.payload,
-                note: 'Somebody already signed up for the hour slot between client data retrieval and client data submission. Appointment data refreshed, please pick other time slots.'
+                note: 'Error'
             });
         default: 
             return state;

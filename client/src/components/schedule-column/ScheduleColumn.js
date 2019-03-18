@@ -17,7 +17,7 @@ class ScheduleColumn extends React.Component {
 
     render() {
         return (
-            <div className='column' key={this.props.d}> 
+            <div className='column'> 
                 <Day day={this.props.d} key={this.props.d+this.props.i} handleHoursHide={this.handleHoursHide}/>
                 <div className={`hours ${this.state.hours}`}>
                     {
