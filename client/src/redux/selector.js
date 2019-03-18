@@ -4,7 +4,7 @@ export default function selector(state, ownProps) {
     for (let e of state.appointments) {
         if (e.day === ownProps.day && e.hour === ownProps.hour) {
             return { name: e.name, phone: e.phone, color: 'red' }; // assigned already
-        } 
+        };
     };
     return { name: '', phone: '', color: 'white' }; // free to assign
 };

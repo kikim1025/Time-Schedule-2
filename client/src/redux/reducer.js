@@ -1,4 +1,4 @@
-import { GET_DATA, FAIL } from './actions';
+import {GET_DATA, FAIL, FAIL_INPUT} from '../constants/constants'
 
 const initState = {};
 
@@ -11,7 +11,11 @@ function reducer(state = initState, action) {
             });
         case FAIL:
             return Object.assign({}, state, { 
-                note: 'Error'
+                note: 'Server Error'
+            });
+        case FAIL_INPUT:
+            return Object.assign({}, state, { 
+                note: 'Please check your input. Note that phone number has to be 10 digit long with no dashes.'
             });
         default: 
             return state;

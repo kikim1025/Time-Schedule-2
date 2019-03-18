@@ -1,4 +1,7 @@
-// This file stores the basic structure of schedule to be rendered to client UI
+// Redux action constants
+export const GET_DATA = 'GET_DATA';
+export const FAIL = 'FAIL';
+export const FAIL_INPUT = 'FAIL_INPUT';
 
 // Define weekdays to be shown on schedule, as well as hour heading
 export const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];

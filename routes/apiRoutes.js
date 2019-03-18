@@ -19,7 +19,7 @@ function checkDupAppointments(aList, a2) {
 
 // check if request has correct format
 function checkReqForm(req){
-    if (req.body.name && req.body.phone && req.body.day && req.body.hour && req.body.phone.length === 10) {
+    if (req.body.name && req.body.phone && req.body.day && req.body.hour && !isNaN(req.body.phone) && typeof req.body.phone === 'string' && req.body.phone.length === 10) {
         if (WEEK_DAYS.includes(req.body.day) && DAY_HOURS.includes(req.body.hour)) {
             return true;
         } else {

@@ -41,7 +41,8 @@ class ConnectHour extends React.Component {
                     <div>
                         <ModalBody>
                             <div>Would you like to update this time slot?</div>
-                            <div>Current Name: {this.props.name} Current Phone: {this.props.phone}</div>
+                            <div>Current Name: &nbsp;<b>{this.props.name}</b></div>
+                            <div>Current Phone: <b>{this.props.phone}</b></div>
                             <input id='tempname' type='text' maxLength='15' placeholder='Name' onChange={this.getInput} ></input>
                             <input id='tempphone' type='text' maxLength='10' placeholder='Phone' onChange={this.getInput} ></input>
                         </ModalBody>
