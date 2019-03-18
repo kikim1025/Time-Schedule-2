@@ -19,25 +19,31 @@ class ConnectHour extends React.Component {
     };
 
     sendAppointment = () => {
-        this.props.sendAppointment(this.props.name, this.props.day, this.props.hour);
+        this.props.sendAppointment(this.state.name, this.state.phone, this.props.day, this.props.hour);
         this.toggleModal();
     };
 
     // conditioinally render appointment submission profiles depending on availability and user(red=unavailable, white=available, green=user's)
     canSubmit = (color) => {
         switch(color) { 
-            case 'green':
-                return (
-                    <ModalBody>You have already signed up for this hour slot</ModalBody>
-                )
             case 'red':
                 return (
-                    <ModalBody>Hour slot unavailable</ModalBody>
+                    <div>
+                        <ModalBody>Would you like to update this time slot?
+
+                        </ModalBody>
+                        <ModalFooter>
+                                <Button color='primary' onClick={this.sendAppointment}>Edit Appointment</Button>
+                                <Button color='danger' onClick={this.toggleModal}>Cancel</Button>
+                        </ModalFooter>
+                    </div>
                 )
             default: 
                 return (
                     <div>
-                        <ModalBody>Is this time correct?</ModalBody>
+                        <ModalBody>Please enter your name and phone number
+
+                        </ModalBody>
                         <ModalFooter>
                                 <Button color='primary' onClick={this.sendAppointment}>Submit Appointment</Button>
                                 <Button color='danger' onClick={this.toggleModal}>Cancel</Button>
@@ -63,13 +69,12 @@ class ConnectHour extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         color: selectColor(state, ownProps),
-        name: state.name
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        sendAppointment: (name, day, hour) => dispatch(sendAppointment(name, day, hour))
+        sendAppointment: (name, phone, day, hour) => dispatch(sendAppointment(name, phone, day, hour))
     };
 };
 

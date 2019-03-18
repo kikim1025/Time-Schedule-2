@@ -1,15 +1,25 @@
 // Simple array to keep track of appointments in object format
-const appointments = [{ name: 'Ki', day: 'Monday', hour: '11am' }];
+const appointments = [{ name: 'Ki', phone: '3012752346', day: 'Monday', hour: '11am' }];
 
-// check if slot is already occupied, which can happen if another user submits appointment post data retrieval by user 
+// check if slot is already occupied
 function checkDupAppointments(aList, a2) {
-    for (let a1 of aList) {
-        if (a1.day === a2.day && a1.hour === a2.hour) {
-            return true;
+    for (let i = 0; i < aList.length; i++) {
+        if (aList[i].day === a2.day && aList[i].hour === a2.hour) {
+            return i;
         };
     };
-    return false;
+    return -1;
 };
+
+// check if request has correct format
+function checkReqForm(req){
+    if (req.name && req.phone && req.day && req.hour && req.phone.length === 10) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 
 module.exports = function(app) {
     // Sends appointment data to client
@@ -17,15 +27,33 @@ module.exports = function(app) {
         res.json({ status: 200, data: appointments});
     });
     
-    // Updates with appointment data from client then send success or failure
+    // Post new appointment data from client then send success or failure
     app.post('/api/appointments', function (req, res) {
-        if (checkDupAppointments(appointments, req.body)) {
-            res.json({ status: 409, data: appointments });
+        if (checkReqForm(req)) {
+            if (checkDupAppointments(appointments, req.body) === -1) {
+                appointments.push({name: req.body.name, phone: req.body.phone, day: req.body.day, hour: req.body.hour});
+                res.json({ status: 200, data: appointments});
+            } else {
+                res.json({ status: 403, message: 'Please use the website to send api requests!'});
+            };
         } else {
-            appointments.push(req.body);
-            res.json({ status: 200, data: appointments});
-        };
+            res.json({ status: 400 });
+        }
+        
     });
 
-    //app.delete -> maybe if i have time
+    // Update specific occupied day/hour with appointment data form client
+    app.put('/api/appointments', function(req, res) {
+        if (checkReqForm(req)) {    
+            let dup = checkDupAppointments(appointments, req.body);
+            if (dup === -1) {
+                res.json({ status: 403, message: 'Please use the website to send api requests!'});
+            } else {
+                appointments[dup] = {name: req.body.name, phone: req.body.phone, day: req.body.day, hour: req.body.hour};
+                res.json({ status: 200, data: appointments});
+            }
+        } else {
+            res.json({ status: 400 });
+        }
+    });
 };
