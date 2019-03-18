@@ -1,6 +1,12 @@
 // Simple array to keep track of appointments in object format
 const appointments = [{ name: 'Ki', phone: '3012752346', day: 'Monday', hour: '11am' }];
 
+// Define weekdays to be shown on schedule, as well as hour heading
+const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+// Define specific hours to be shown per day
+const DAY_HOURS = ['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm'];
+
 // check if slot is already occupied
 function checkDupAppointments(aList, a2) {
     for (let i = 0; i < aList.length; i++) {
@@ -13,11 +19,15 @@ function checkDupAppointments(aList, a2) {
 
 // check if request has correct format
 function checkReqForm(req){
-    if (req.name && req.phone && req.day && req.hour && req.phone.length === 10) {
-        return true;
+    if (req.body.name && req.body.phone && req.body.day && req.body.hour && req.body.phone.length === 10) {
+        if (WEEK_DAYS.includes(req.body.day) && DAY_HOURS.includes(req.body.hour)) {
+            return true;
+        } else {
+            return false;
+        };
     } else {
         return false;
-    }
+    };
 };
 
 
@@ -38,7 +48,7 @@ module.exports = function(app) {
             };
         } else {
             res.json({ status: 400 });
-        }
+        };
         
     });
 
@@ -51,9 +61,9 @@ module.exports = function(app) {
             } else {
                 appointments[dup] = {name: req.body.name, phone: req.body.phone, day: req.body.day, hour: req.body.hour};
                 res.json({ status: 200, data: appointments});
-            }
+            };
         } else {
             res.json({ status: 400 });
-        }
+        };
     });
 };
